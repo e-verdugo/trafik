@@ -1,40 +1,76 @@
-import { View, Text, TextInput, Button } from "react-native";
-import { Typography, Forms, Base } from '../styles';
+import { View, Text, Button } from "react-native";
+import { Typography, Base } from '../styles';
+import stationsModel from "../models/stations";
+import Stations from "../interfaces/stations";
+import { useState, useEffect } from "react";
+import { Picker } from '@react-native-picker/picker';
 
 export default function Search({ navigation }: any) {
+    const [stations, setStations] = useState<Partial<Stations>>({});
+    const [targetStations, setTargetStations] = useState<Partial<Stations>>({});
+    const [currentStation, setCurrentStation] = useState({});
+    const [targetStation, setTargetStation] = useState({});
+
     return (
         <View style={Base.base}>
             <Text style={Typography.header2}>För vilken sträcka vill du hitta försenade tåg?</Text>
 
-            <TextInput
-                style={Forms.input}
-                // onChangeText={(content: string) => {
-                //     setAuth({ ...auth, email: content })
-                // }}
-                // value={auth?.email}
-                // keyboardType="email-address"
+            <StationDropDown
+                stations={stations}
+                setStations={setStations}
+                setCurrentStation={setCurrentStation}
             />
 
-            <TextInput
-                style={Forms.input}
-                // onChangeText={(content: string) => {
-                //     setAuth({ ...auth, password: content })
-                // }}
-                // value={auth?.password}
-                // secureTextEntry={true}
+            <StationDropDown
+                stations={targetStations}
+                setStations={setTargetStations}
+                setCurrentStation={setTargetStation}
             />
+
             <Button
                 title="Arrow up and down"
                 onPress={() => {
-                    // change stations placement
+                    const tempStation = currentStation;
+                    setCurrentStation(targetStation)
+                    setTargetStation(tempStation)
                 }}
             />
+
             <Button
                 title="Sök"
                 onPress={() => {
-                    navigation.navigate("Delays");
+                    navigation.navigate("Delays", {
+                        navigation: navigation,
+                        currentStation: currentStation,
+                        targetStation: targetStation,
+                    });
                 }}
             />
         </View>
     );
 };
+
+function StationDropDown(props) {
+    const [stations, setStations] = useState([]);
+
+    useEffect(() => {
+        (async () => {
+            setStations(await stationsModel.getStations());
+        })()
+    }, []);
+
+    const stationsList = stations.map((station, index) => {
+        return <Picker.Item key={index} label={station.AdvertisedLocationName} value={station.LocationSignature} />;
+    });
+
+    return (
+        <Picker
+            selectedValue={props.stations?.AdvertisedLocationName}
+            onValueChange={(itemValue) => {
+                props.setStations({ ...props.stations, AdvertisedLocationName: itemValue });
+                props.setCurrentStation(itemValue);
+            }}>
+            {stationsList}
+        </Picker>
+    );
+}
