@@ -9,13 +9,14 @@ import Search from './components/Search';
 import Delays from './components/Delays';
 import Profile from './components/Profile';
 import More from './components/More';
+import Map from './components/Map';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
 
     return (
-        <SafeAreaView style={Base.container}>
+        <SafeAreaView style={Base.base}>
             <View style={Base.base}>
                 <StatusBar style="auto" />
                 <NavigationContainer>
@@ -24,6 +25,7 @@ export default function App() {
                         <Stack.Screen name="Delays" component={Delays} />
                         <Stack.Screen name="Profile" component={Profile} />
                         <Stack.Screen name="More" component={More} />
+                        <Stack.Screen name="Map" component={Map} />
                     </Stack.Navigator>
                 </NavigationContainer>
             </View>

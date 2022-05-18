@@ -28,7 +28,7 @@ export default function Search({ navigation }: any) {
             />
 
             <Button
-                title="Arrow up and down"
+                title="Change direction of stations"
                 onPress={() => {
                     const tempStation = currentStation;
                     setCurrentStation(targetStation)
@@ -59,7 +59,9 @@ function StationDropDown(props) {
         })()
     }, []);
 
-    const stationsList = stations.map((station, index) => {
+    const sortedStations = stations.sort((a,b) => (a.AdvertisedLocationName < b.AdvertisedLocationName) ? -1 : ((b.AdvertisedLocationName > a.AdvertisedLocationName) ? 1 : 0));
+
+    const stationsList = sortedStations.map((station, index) => {
         return <Picker.Item key={index} label={station.AdvertisedLocationName} value={station.LocationSignature} />;
     });
 

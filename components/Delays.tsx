@@ -20,34 +20,59 @@ export default function Delays({ route, navigation }: any) {
     }, []);
 
     const listOfDelays = delays
-        .filter(delays => delays.FromLocation[0].LocationName === currentStation)
-        .filter(delays => delays.ToLocation[0].LocationName === targetStation)
-        .map((delays, index) => {
-            let newTime = new Date(delays.EstimatedTimeAtLocation).getTime();
-            let departureTime = new Date(delays.AdvertisedTimeAtLocation).toLocaleString();
-            let depTime = new Date(delays.AdvertisedTimeAtLocation).getTime();
-            let changedTime = (newTime-depTime)/60/60/60;
-            return <Text style={Typography.normal} key={index}>Tåg {delays.AdvertisedTrainIdent} Avgångstid {departureTime} Försenad {changedTime}</Text>
+        .map((delay, index) => {
+            // let newTime = new Date(delay.EstimatedTimeAtLocation).getTime(); // the new departure time
+            let departureTime = new Date(delay.AdvertisedTimeAtLocation).toLocaleString(); // previous departure time
+            let depTime = new Date(delay.AdvertisedTimeAtLocation).getTime(); // previous departure time
+            let currentTime = new Date().getTime();
+            let changedTime = Math.round((currentTime - depTime) / 1000 / 60); // time since it was supposed to depart
+
+            try {
+                if (changedTime > 0 && delay.FromLocation[0].LocationName === currentStation && delay.ToLocation[0].LocationName === targetStation) {
+                    return <Text style={Typography.normal} key={index} onPress={() => {
+                        navigation.navigate("Map", {
+                            navigation: navigation,
+                            station: delay.FromLocation[0].LocationName,
+                        });
+                    }}>
+                        Tåg {delay.AdvertisedTrainIdent} {'\n'}
+                        Avgångstid {departureTime} {'\n'}
+                        Försenad {changedTime} minuter {'\n'}
+                    </Text>
+                }
+            } catch {
+                // do nothing
+            }
         });
 
     return (
-        <ScrollView>
+        <View style={Base.base}>
             <View style={Base.base}>
-                <Text style={Typography.header2}>FÖRSENADE TÅG</Text>
-                {listOfDelays}
-                <Button
-                    title="Sök"
-                    onPress={() => {
-                        navigation.goBack();
-                    }}
-                />
-                <Button
-                    title="Mer"
-                    onPress={() => {
-                        navigation.navigate("More");
-                    }}
-                />
+                <ScrollView>
+                    <Text style={Typography.header2}>FÖRSENADE TÅG</Text>
+                    {listOfDelays}
+                </ScrollView>
             </View>
-        </ScrollView>
+            <View style={Base.container}>
+                <View style={Base.button1}>
+                    <Button
+                        title="Sök"
+                        onPress={() => {
+                            navigation.popToTop();
+                        }}
+                        color="grey"
+                    />
+                </View>
+                <View style={Base.button2}>
+                    <Button
+                        title="Mer"
+                        onPress={() => {
+                            navigation.navigate("More");
+                        }}
+                        color="grey"
+                    />
+                </View>
+            </View>
+        </View>
     );
 };
