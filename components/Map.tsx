@@ -36,19 +36,17 @@ export default function ShipOrder({ navigation, route }: any) {
 
     return (
         <View style={Base.base}>
-            <View style={Base.container}>
-                <MapView
-                    style={styles.map}
-                    initialRegion={{
-                        latitude: 60,
-                        longitude: 15,
-                        latitudeDelta: 10,
-                        longitudeDelta: 10,
-                    }}>
-                    {marker}
-                    {locationMarker}
-                </MapView>
-            </View>
+            <MapView
+                style={styles.map}
+                initialRegion={{
+                    latitude: 60,
+                    longitude: 15,
+                    latitudeDelta: 10,
+                    longitudeDelta: 10,
+                }}>
+                {marker}
+                {locationMarker}
+            </MapView>
         </View>
     );
 };

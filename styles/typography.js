@@ -20,6 +20,7 @@ export const header3 = {
     marginTop: 0,
     paddingLeft: 12,
     paddingRight: 12,
+    textAlign: "center",
 };
 
 export const header4 = {

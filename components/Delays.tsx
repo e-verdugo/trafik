@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import stationsModel from '../models/stations';
 import delaysModel from '../models/delayed';
 import Stations from '../interfaces/stations';
+import { IconButton } from 'react-native-paper';
 
 export default function Delays({ route, navigation }: any) {
     const { currentStation } = route.params;
@@ -21,24 +22,41 @@ export default function Delays({ route, navigation }: any) {
 
     const listOfDelays = delays
         .map((delay, index) => {
-            // let newTime = new Date(delay.EstimatedTimeAtLocation).getTime(); // the new departure time
-            let departureTime = new Date(delay.AdvertisedTimeAtLocation).toLocaleString(); // previous departure time
+            let departureTime = new Date(delay.AdvertisedTimeAtLocation).toLocaleTimeString(); // previous departure time
             let depTime = new Date(delay.AdvertisedTimeAtLocation).getTime(); // previous departure time
             let currentTime = new Date().getTime();
             let changedTime = Math.round((currentTime - depTime) / 1000 / 60); // time since it was supposed to depart
 
             try {
                 if (changedTime > 0 && delay.FromLocation[0].LocationName === currentStation && delay.ToLocation[0].LocationName === targetStation) {
-                    return <Text style={Typography.normal} key={index} onPress={() => {
-                        navigation.navigate("Map", {
-                            navigation: navigation,
-                            station: delay.FromLocation[0].LocationName,
-                        });
-                    }}>
-                        Tåg {delay.AdvertisedTrainIdent} {'\n'}
-                        Avgångstid {departureTime} {'\n'}
-                        Försenad {changedTime} minuter {'\n'}
-                    </Text>
+                    return <View style={{backgroundColor: "white", margin: 12}}>
+                        <View style={Base.containerR}>
+                            <Text style={Typography.normal} key={index} onPress={() => {
+                                navigation.navigate("Map", {
+                                    navigation: navigation,
+                                    station: delay.FromLocation[0].LocationName,
+                                });
+                            }}>
+                                {delay.AdvertisedTrainIdent}
+                            </Text>
+                            <Text style={Typography.normal} key={index} onPress={() => {
+                                navigation.navigate("Map", {
+                                    navigation: navigation,
+                                    station: delay.FromLocation[0].LocationName,
+                                });
+                            }}>
+                                {departureTime}
+                            </Text>
+                            <Text style={Typography.normal} key={index} onPress={() => {
+                                navigation.navigate("Map", {
+                                    navigation: navigation,
+                                    station: delay.FromLocation[0].LocationName,
+                                });
+                            }}>
+                                {changedTime} min
+                            </Text>
+                        </View>
+                    </View>
                 }
             } catch {
                 // do nothing
@@ -49,29 +67,31 @@ export default function Delays({ route, navigation }: any) {
         <View style={Base.base}>
             <View style={Base.base}>
                 <ScrollView>
-                    <Text style={Typography.header2}>FÖRSENADE TÅG</Text>
+                    <Text style={Typography.header3}>FÖRSENADE TÅG</Text>
+                    <View style={Base.containerR}>
+                        <Text style={Typography.header4}>Tåg</Text>
+                        <Text style={Typography.header4}>Avgångstid</Text>
+                        <Text style={Typography.header4}>Försenad</Text>
+                    </View>
                     {listOfDelays}
                 </ScrollView>
             </View>
             <View style={Base.container}>
-                <View style={Base.button1}>
-                    <Button
-                        title="Sök"
+                <View style={Base.containerB}>
+                    <IconButton
+                        icon="home"
                         onPress={() => {
                             navigation.popToTop();
                         }}
-                        color="grey"
                     />
-                </View>
-                <View style={Base.button2}>
-                    <Button
-                        title="Mer"
+                    <IconButton
+                        icon="dots-horizontal"
                         onPress={() => {
                             navigation.navigate("More");
                         }}
-                        color="grey"
                     />
                 </View>
+
             </View>
         </View>
     );

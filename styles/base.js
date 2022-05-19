@@ -1,30 +1,41 @@
 export const base = {
-    flex: 5,
+    flex: 10,
     height: "100%",
 };
 
-export const button1 = {
-    position: "absolute",
-    backgroundColor: 456,
-    width: "25%",
-    height: "100%",
-    left: "0%",
-    backgroundColor: "gray",
-};
-
-export const button2 = {
-    position: "absolute",
-    backgroundColor: 456,
-    width: "25%",
-    height: "100%",
-    right: "0%",
-    backgroundColor: "gray",
+export const containerB = {
+    flexDirection: "row",
+    flex: 1,
+    justifyContent: "space-between",
+    backgroundColor: "lightgrey",
 };
 
 export const container = {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
+    marginTop: 70,
+};
+
+export const containerC = {
+    flex: 2,
+    flexDirection: "column",
+};
+
+export const containerR = {
+    flexDirection: "row",
+    flex: 1,
+    justifyContent: "space-between",
+    padding: 12,
+};
+
+export const containerW = {
+    width: "100%",
+    marginBottom: 12,
+};
+
+export const colour = {
+    backgroundColor: "lightgrey",
 };
 
 export const html = {
