@@ -4,7 +4,6 @@ import stationsModel from "../models/stations";
 import Stations from "../interfaces/stations";
 import { useState, useEffect } from "react";
 import { Picker } from '@react-native-picker/picker';
-import { IconButton } from 'react-native-paper';
 
 export default function Search({ navigation }: any) {
     const [stations, setStations] = useState<Partial<Stations>>({});
@@ -21,7 +20,7 @@ export default function Search({ navigation }: any) {
                 <View style={Base.containerW}>
                     <Text style={Typography.header3}>För vilken sträcka vill du hitta försenade tåg?</Text>
                 </View>
-                <View style={Base.container}>
+                <View style={Base.containerS}>
                     <View style={Base.containerC}>
                         <StationDropDown
                             stations={stations}
@@ -35,18 +34,17 @@ export default function Search({ navigation }: any) {
                         />
                     </View>
                     <View style={Base.containerR}>
-                        <View style={Base.colour}>
-                            <IconButton
-                                icon="arrow-up-down-bold"
-                                onPress={() => {
-                                    const tempStation = currentStation;
-                                    setCurrentStation(targetStation)
-                                    setTargetStation(tempStation)
-                                }}
-                            />
-                        </View>
                         <Button
-                            title="Sök"
+                            title="  ↕  "
+                            onPress={() => {
+                                const tempStation = currentStation;
+                                setCurrentStation(targetStation)
+                                setTargetStation(tempStation)
+                            }}
+                            color="lightgrey"
+                        />
+                        <Button
+                            title="   Sök   "
                             onPress={() => {
                                 navigation.navigate("Delays", {
                                     navigation: navigation,
@@ -60,7 +58,7 @@ export default function Search({ navigation }: any) {
                 </View>
             </View>
 
-            <View style={Base.container}>
+            <View style={Base.containerL}>
             </View>
         </View>
     );

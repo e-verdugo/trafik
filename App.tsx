@@ -7,9 +7,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Search from './components/Search';
 import Delays from './components/Delays';
-import Profile from './components/Profile';
+import Login from './components/Login';
 import More from './components/More';
 import Map from './components/Map';
+import Register from './components/Register';
+import Profile from './components/Profile';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +28,8 @@ export default function App() {
                         <Stack.Screen name="Profile" component={Profile} />
                         <Stack.Screen name="More" component={More} />
                         <Stack.Screen name="Map" component={Map} />
+                        <Stack.Screen name="Register" component={Register} />
+                        <Stack.Screen name="Login" component={Login} />
                     </Stack.Navigator>
                 </NavigationContainer>
             </View>

@@ -1,4 +1,4 @@
-import config from "../../config/config.json";
+import config from "../config/config.json";
 import storage from "./storage";
 
 const auth = {
@@ -15,7 +15,7 @@ const auth = {
             email: email,
             password: password,
         };
-        const response = await fetch(`${config.base_url}/auth/login`, {
+        const response = await fetch(`${config.auth_url}/login`, {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
@@ -46,7 +46,7 @@ const auth = {
             email: email,
             password: password,
         };
-        const response = await fetch(`${config.base_url}/auth/register`, {
+        const response = await fetch(`${config.auth_url}/register`, {
             method: "POST",
             body: JSON.stringify(data),
             headers: {

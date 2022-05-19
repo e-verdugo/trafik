@@ -14,7 +14,20 @@ export const container = {
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 70,
+    marginTop: "40%",
+};
+
+export const containerL = {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: "60%",
+};
+
+export const containerS = {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
 };
 
 export const containerC = {
@@ -26,12 +39,11 @@ export const containerR = {
     flexDirection: "row",
     flex: 1,
     justifyContent: "space-between",
-    padding: 12,
+    padding: 5,
 };
 
 export const containerW = {
     width: "100%",
-    marginBottom: 12,
 };
 
 export const colour = {

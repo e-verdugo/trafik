@@ -87,11 +87,12 @@ export default function Delays({ route, navigation }: any) {
                     <IconButton
                         icon="dots-horizontal"
                         onPress={() => {
-                            navigation.navigate("More");
+                            navigation.navigate("More", {
+                                reload: true,
+                            });
                         }}
                     />
                 </View>
-
             </View>
         </View>
     );
