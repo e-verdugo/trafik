@@ -6,8 +6,7 @@ import { Marker } from "react-native-maps";
 import * as Location from 'expo-location';
 import stationsModel from "../models/stations";
 
-export default function ShipOrder({ navigation, route }: any) {
-    const { station } = route.params;
+export default function Map({ navigation, station }: any) {
     const [marker, setMarker] = useState(null);
     const [locationMarker, setLocationMarker] = useState(null);
     const [errorMessage, setErrorMessage] = useState(null);
@@ -29,7 +28,7 @@ export default function ShipOrder({ navigation, route }: any) {
                 }
             });
             if (lat != 0 && lon != 0) {
-                await Map(setMarker, setErrorMessage, setLocationMarker, stationName, lat, lon);
+                await TheMap(setMarker, setErrorMessage, setLocationMarker, stationName, lat, lon);
             }
         })()
     }, []);
@@ -57,7 +56,7 @@ const styles = StyleSheet.create({
     },
 });
 
-async function Map(setMarker, setErrorMessage, setLocationMarker, stationName, lat, lon) {
+async function TheMap(setMarker, setErrorMessage, setLocationMarker, stationName, lat, lon) {
     setMarker(<Marker
         coordinate={{
             latitude: lat,

@@ -1,9 +1,8 @@
 import { View, Text, Button } from "react-native";
 import { Typography, Base } from '../styles';
-import stationsModel from "../models/stations";
 import Stations from "../interfaces/stations";
-import { useState, useEffect } from "react";
-import { Picker } from '@react-native-picker/picker';
+import { useState } from "react";
+import StationDropDown from "./StationDropDown";
 
 export default function Search({ navigation }: any) {
     const [stations, setStations] = useState<Partial<Stations>>({});
@@ -15,7 +14,6 @@ export default function Search({ navigation }: any) {
         <View style={Base.base}>
             <View style={Base.container}>
             </View>
-
             <View style={Base.containerC}>
                 <View style={Base.containerW}>
                     <Text style={Typography.header3}>För vilken sträcka vill du hitta försenade tåg?</Text>
@@ -26,11 +24,13 @@ export default function Search({ navigation }: any) {
                             stations={stations}
                             setStations={setStations}
                             setCurrentStation={setCurrentStation}
+                            selectedValue="Cst"
                         />
                         <StationDropDown
                             stations={targetStations}
                             setStations={setTargetStations}
                             setCurrentStation={setTargetStation}
+                            selectedValue="M"
                         />
                     </View>
                     <View style={Base.containerR}>
@@ -57,36 +57,8 @@ export default function Search({ navigation }: any) {
                     </View>
                 </View>
             </View>
-
             <View style={Base.containerL}>
             </View>
         </View>
     );
 };
-
-function StationDropDown(props) {
-    const [stations, setStations] = useState([]);
-
-    useEffect(() => {
-        (async () => {
-            setStations(await stationsModel.getStations());
-        })()
-    }, []);
-
-    const sortedStations = stations.sort((a, b) => (a.AdvertisedLocationName < b.AdvertisedLocationName) ? -1 : ((b.AdvertisedLocationName > a.AdvertisedLocationName) ? 1 : 0));
-
-    const stationsList = sortedStations.map((station, index) => {
-        return <Picker.Item key={index} label={station.AdvertisedLocationName} value={station.LocationSignature} />;
-    });
-
-    return (
-        <Picker
-            selectedValue={props.stations?.AdvertisedLocationName}
-            onValueChange={(itemValue) => {
-                props.setStations({ ...props.stations, AdvertisedLocationName: itemValue });
-                props.setCurrentStation(itemValue);
-            }}>
-            {stationsList}
-        </Picker>
-    );
-}

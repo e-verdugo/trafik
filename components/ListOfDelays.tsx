@@ -1,21 +1,14 @@
-import { View, Text, ScrollView } from 'react-native';
-import { Base, Typography } from '../styles';
-import { useEffect, useState } from 'react';
-import stationsModel from '../models/stations';
-import delaysModel from '../models/delayed';
-import Stations from '../interfaces/stations';
-import { IconButton } from 'react-native-paper';
+import { View, Text, } from "react-native";
+import { Typography, Base } from '../styles';
+import { useEffect, useState } from "react";
+import delaysModel from "../models/delayed";
+import Map from "./Map";
 
-export default function Delays({ route, navigation }: any) {
-    const { currentStation } = route.params;
-    const { targetStation } = route.params;
-
+export default function ListOfDelays({ navigation, station }: any) {
     const [delays, setDelays] = useState([]);
-    const [stations, setStations] = useState<Partial<Stations>>({});
 
     useEffect(() => {
         (async () => {
-            setStations(await stationsModel.getStations());
             setDelays(await delaysModel.getDelays());
         })()
     }, []);
@@ -28,8 +21,14 @@ export default function Delays({ route, navigation }: any) {
             let changedTime = Math.round((currentTime - depTime) / 1000 / 60); // time since it was supposed to depart
 
             try {
-                if (changedTime > 0 && delay.FromLocation[0].LocationName === currentStation && delay.ToLocation[0].LocationName === targetStation) {
-                    return <View style={{backgroundColor: "white", margin: 12}}>
+                if (changedTime > 0 && delay.FromLocation[0].LocationName === station) {
+                    return <View style={{ backgroundColor: "white", margin: 12 }}>
+                        <Text style={Typography.normal}>{delay.AdvertisedLocationName}</Text>
+                        <View style={Base.containerR}>
+                            <Text style={Typography.header4}>Tåg</Text>
+                            <Text style={Typography.header4}>Avgångstid</Text>
+                            <Text style={Typography.header4}>Försenad</Text>
+                        </View>
                         <View style={Base.containerR}>
                             <Text style={Typography.normal} key={index} onPress={() => {
                                 navigation.navigate("Map", {
@@ -56,6 +55,9 @@ export default function Delays({ route, navigation }: any) {
                                 {changedTime} min
                             </Text>
                         </View>
+                        <Map
+                            station={delay.FromLocation[0].LocationName}
+                        />
                     </View>
                 }
             } catch {
@@ -63,37 +65,5 @@ export default function Delays({ route, navigation }: any) {
             }
         });
 
-    return (
-        <View style={Base.base}>
-            <View style={Base.base}>
-                <ScrollView>
-                    <Text style={Typography.header3}>FÖRSENADE TÅG</Text>
-                    <View style={Base.containerR}>
-                        <Text style={Typography.header4}>Tåg</Text>
-                        <Text style={Typography.header4}>Avgångstid</Text>
-                        <Text style={Typography.header4}>Försenad</Text>
-                    </View>
-                    {listOfDelays}
-                </ScrollView>
-            </View>
-            <View style={Base.container}>
-                <View style={Base.containerB}>
-                    <IconButton
-                        icon="home"
-                        onPress={() => {
-                            navigation.popToTop();
-                        }}
-                    />
-                    <IconButton
-                        icon="dots-horizontal"
-                        onPress={() => {
-                            navigation.navigate("More", {
-                                reload: true,
-                            });
-                        }}
-                    />
-                </View>
-            </View>
-        </View>
-    );
-};
+    return <View>{listOfDelays}</View>;
+}

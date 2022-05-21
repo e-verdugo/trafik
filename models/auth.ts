@@ -58,7 +58,54 @@ const auth = {
     },
     logout: async function logout() {
         await storage.deleteToken();
-    }
+    },
+    saveData: async function saveData(station: string) {
+        const token = await storage.readToken();
+        let method = "POST";
+        const data = {
+            artefact: station,
+            api_key: config.api_key,
+        };
+        const response = await fetch(`${config.auth_url}/data`, {
+            method: method,
+            body: JSON.stringify(data),
+            headers: {
+                'content-type': 'application/json',
+                'x-access-token': token.token
+            },
+        });
+
+        return await response.json();
+    },
+    getData: async function getData() {
+        const token = await storage.readToken();
+        const response = await fetch(`${config.auth_url}/data?api_key=${config.api_key}`, {
+            method: "GET",
+            headers: {
+                'x-access-token': token.token
+            },
+        });
+
+        return await response.json();
+    },
+    deleteData: async function deleteData(data_id: string) {
+        const token = await storage.readToken();
+        let method = "DELETE";
+        const data = {
+            id: data_id,
+            api_key: config.api_key,
+        };
+        const response = await fetch(`${config.auth_url}/data`, {
+            method: method,
+            body: JSON.stringify(data),
+            headers: {
+                'content-type': 'application/json',
+                'x-access-token': token.token
+            },
+        });
+
+        return await response.json();
+    },
 };
 
 export default auth;
