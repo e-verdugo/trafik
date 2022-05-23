@@ -33,24 +33,21 @@ export default function Delays({ route, navigation }: any) {
                         <View style={Base.containerR}>
                             <Text style={Typography.normal} key={index} onPress={() => {
                                 navigation.navigate("Map", {
-                                    navigation: navigation,
-                                    station: delay.FromLocation[0].LocationName,
+                                    station: currentStation,
                                 });
                             }}>
                                 {delay.AdvertisedTrainIdent}
                             </Text>
                             <Text style={Typography.normal} key={index} onPress={() => {
                                 navigation.navigate("Map", {
-                                    navigation: navigation,
-                                    station: delay.FromLocation[0].LocationName,
+                                    station: currentStation,
                                 });
                             }}>
                                 {departureTime}
                             </Text>
                             <Text style={Typography.normal} key={index} onPress={() => {
                                 navigation.navigate("Map", {
-                                    navigation: navigation,
-                                    station: delay.FromLocation[0].LocationName,
+                                    station: currentStation,
                                 });
                             }}>
                                 {changedTime} min

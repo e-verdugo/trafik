@@ -2,7 +2,6 @@ import { View, Text, } from "react-native";
 import { Typography, Base } from '../styles';
 import { useEffect, useState } from "react";
 import delaysModel from "../models/delayed";
-import Map from "./Map";
 
 export default function ListOfDelays({ navigation, station }: any) {
     const [delays, setDelays] = useState([]);
@@ -30,34 +29,16 @@ export default function ListOfDelays({ navigation, station }: any) {
                             <Text style={Typography.header4}>Försenad</Text>
                         </View>
                         <View style={Base.containerR}>
-                            <Text style={Typography.normal} key={index} onPress={() => {
-                                navigation.navigate("Map", {
-                                    navigation: navigation,
-                                    station: delay.FromLocation[0].LocationName,
-                                });
-                            }}>
+                            <Text style={Typography.normal}>
                                 {delay.AdvertisedTrainIdent}
                             </Text>
-                            <Text style={Typography.normal} key={index} onPress={() => {
-                                navigation.navigate("Map", {
-                                    navigation: navigation,
-                                    station: delay.FromLocation[0].LocationName,
-                                });
-                            }}>
+                            <Text style={Typography.normal}>
                                 {departureTime}
                             </Text>
-                            <Text style={Typography.normal} key={index} onPress={() => {
-                                navigation.navigate("Map", {
-                                    navigation: navigation,
-                                    station: delay.FromLocation[0].LocationName,
-                                });
-                            }}>
+                            <Text style={Typography.normal}>
                                 {changedTime} min
                             </Text>
                         </View>
-                        <Map
-                            station={delay.FromLocation[0].LocationName}
-                        />
                     </View>
                 }
             } catch {

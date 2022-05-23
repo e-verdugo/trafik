@@ -5,13 +5,12 @@ import { useEffect, useState } from "react";
 import StationDropDown from "./StationDropDown";
 import Stations from "../interfaces/stations";
 import ListOfDelays from "./ListOfDelays";
-import Map from "./Map";
 
 export default function Profile({ navigation }: any) {
     let starterValue = [];
     const [stations, setStations] = useState<Partial<Stations>>({});
     const [userData, setUserData] = useState({});
-    const [favStations, setFavStations] = useState("Cst");
+    const [favStation, setFavStation] = useState("Cst");
 
     useEffect(() => {
         (async () => {
@@ -30,24 +29,26 @@ export default function Profile({ navigation }: any) {
     }
 
     const listOfDelays = starterValue
-        .map((value, index) => {
+        .map((value) => {
             return <View>
                 <Text style={Typography.header4}>{value[0]}</Text>
                 <ListOfDelays
                     station={value[0]}
                 />
-                <View style={Base.container}>
-                    <View style={Base.scroll}>
-                        <Map
-                            station={favStations}
-                        />
-                    </View>
-                </View>
+                <Button
+                    title="Se på karta"
+                    onPress={() => {
+                        navigation.navigate("Map", {
+                            station: value[0],
+                        });
+                    }}
+                    color="lightgrey"
+                />
                 <Button
                     title="Ta bort station från favoriter"
                     onPress={() => {
                         authModel.deleteData(value[1])
-                        alert("Station " + favStations + " borttagen.")
+                        alert("Station " + value[0] + " borttagen.")
                     }}
                     color="lightgrey"
                 />
@@ -63,7 +64,7 @@ export default function Profile({ navigation }: any) {
                     <StationDropDown
                         stations={stations}
                         setStations={setStations}
-                        setCurrentStation={setFavStations}
+                        setCurrentStation={setFavStation}
                         selectedValue="Cst"
                     />
                     {listOfDelays}
@@ -82,8 +83,8 @@ export default function Profile({ navigation }: any) {
                 <Button
                     title="Spara"
                     onPress={() => {
-                        authModel.saveData(favStations),
-                            alert("Station " + favStations + " sparad!")
+                        authModel.saveData(favStation),
+                            alert("Station " + favStation + " sparad!")
                     }}
                     color="lightgrey"
                 />
