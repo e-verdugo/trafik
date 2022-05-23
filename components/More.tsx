@@ -21,11 +21,15 @@ export default function More({ navigation, route }: any) {
 
     return (
         <View style={Base.base}>
-            <Text style={Typography.header2}>OM</Text>
+            <Text style={Typography.header3}>OM</Text>
             <Text style={Typography.normal}>
-                -Detaljer
-                -Detaljer
-                -Detaljer
+                -Appen jag har valt att efterlikna heter Tågförseningar och den vill hjälpa dig som resenär att få en överblick över vilka tåg som varit försenade under dagen.{'\n'}
+            </Text>
+            <Text style={Typography.normal}>
+                -Om du trycker på ett tåg så får du upp en karta som visar vart stationen ligger och vart du är.{'\n'}
+            </Text>
+            <Text style={Typography.normal}>
+                -Tågförseningar vill förenkla processen att få ersättning är försenade resor, men jag tror att den är lite av en phishingscam. Jag skulle inte lita på att skriva in mitt personnummer och kortnummer för att göra processen enklare.{'\n'}
             </Text>
             <View style={Base.base}>
             </View>

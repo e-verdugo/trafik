@@ -18,20 +18,15 @@ export default function Map({ route }: any) {
 
     useEffect(() => {
         (async () => {
-            console.log("1");
             setStations(await stationsModel.getStations());
-            console.log(stations, "2");
             const assignment = stations
             .map((place) => {
-                console.log("3");
                 if (place.LocationSignature == station) {
-                    console.log("4");
                     stationName = place.AdvertisedLocationName;
                     lat = parseFloat(place.Geometry.WGS84.split(' ')[2].slice(0, -1));
                     lon = parseFloat(place.Geometry.WGS84.split(' ')[1].slice(1));
                 }
             });
-            console.log(assignment, "4");
             if (lat != 0 && lon != 0) {
                 setMarker(<Marker
                     coordinate={{
