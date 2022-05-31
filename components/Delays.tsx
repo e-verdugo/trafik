@@ -34,6 +34,7 @@ export default function Delays({ route, navigation }: any) {
                             <Text style={Typography.normal} key={index} onPress={() => {
                                 navigation.navigate("Map", {
                                     station: currentStation,
+                                    delay: {changedTime},
                                 });
                             }}>
                                 {delay.AdvertisedTrainIdent}
@@ -41,6 +42,7 @@ export default function Delays({ route, navigation }: any) {
                             <Text style={Typography.normal} key={index} onPress={() => {
                                 navigation.navigate("Map", {
                                     station: currentStation,
+                                    delay: {changedTime},
                                 });
                             }}>
                                 {departureTime}
@@ -48,6 +50,7 @@ export default function Delays({ route, navigation }: any) {
                             <Text style={Typography.normal} key={index} onPress={() => {
                                 navigation.navigate("Map", {
                                     station: currentStation,
+                                    delay: {changedTime},
                                 });
                             }}>
                                 {changedTime} min

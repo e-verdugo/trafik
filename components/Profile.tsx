@@ -40,6 +40,7 @@ export default function Profile({ navigation }: any) {
                     onPress={() => {
                         navigation.navigate("Map", {
                             station: value[0],
+                            delay: "",
                         });
                     }}
                     color="lightgrey"

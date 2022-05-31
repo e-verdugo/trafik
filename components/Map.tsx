@@ -15,6 +15,8 @@ export default function Map({ route }: any) {
     let lon = 0;
     let stationName = "";
     const { station } = route.params;
+    const { delay } = route.params;
+    let timeDelay = JSON.stringify(Object.values({delay})[0].changedTime)+" min";
 
     useEffect(() => {
         (async () => {
@@ -34,6 +36,7 @@ export default function Map({ route }: any) {
                         longitude: lon,
                     }}
                     title={stationName}
+                    description={timeDelay}
                     pinColor="yellow"
                 />);
             }
